@@ -1,0 +1,1289 @@
+{
+          "Invocation"  : "testssl.sh --jsonfile-pretty data_test.json -n --protocols --vulnerable --file full_SYN.gnmap",
+          "at"          : "niflheim:./bin/openssl.Linux.x86_64",
+          "version"     : "2.9dev 410c3d5 from 2017-12-21",
+          "openssl"     : "OpenSSL 1.0.2-chacha from Jun 22 19:32:29 2016",
+          "startTime"   : "1513967161",
+          "scanResult"  : [
+          {
+                    "target host"     : "185.74.235.6",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.6",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv3 is not offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "CRITICAL",
+                                "finding"      : "TLSv1.1 is not offered, and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLSv1.2 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable , timed out"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: not vulnerable, session IDs were returned but memory fragments do not differ"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : not vulnerable"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: not vulnerable"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507): Downgrade attack prevention NOT supported"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=FCEA608658F91F5EAD9CC6782C62661C50873C809186751F1CF2F1BAEC1F7A9D"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "common prime 'RFC3526/Oakley Group 14' detected"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: ECDHE-RSA-AES256-SHA DHE-RSA-AES256-SHA DHE-RSA-CAMELLIA256-SHA AES256-SHA CAMELLIA256-SHA ECDHE-RSA-AES128-SHA DHE-RSA-AES128-SHA DHE-RSA-SEED-SHA DHE-RSA-CAMELLIA128-SHA AES128-SHA SEED-SHA CAMELLIA128-SHA IDEA-CBC-SHA ECDHE-RSA-DES-CBC3-SHA EDH-RSA-DES-CBC3-SHA DES-CBC3-SHA EDH-RSA-DES-CBC-SHA DES-CBC-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- and no higher protocols as mitigation supported"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: ECDHE-RSA-RC4-SHA RC4-SHA RC4-MD5"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.7",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.7",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv3 is not offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.1 is offered"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "OK",
+                                "finding"      : "TLSv1.2 is offered"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable , timed out"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: not vulnerable"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : not vulnerable"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: not vulnerable"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "OK",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507) (experimental) : Downgrade attack prevention supported"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=FCEA608658F91F5EAD9CC6782C62661C50873C809186751F1CF2F1BAEC1F7A9D"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "common prime 'RFC3526/Oakley Group 14' detected"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: ECDHE-RSA-AES128-SHA ECDHE-RSA-AES256-SHA DHE-RSA-AES128-SHA DHE-RSA-AES256-SHA ECDHE-RSA-DES-CBC3-SHA AES128-SHA AES256-SHA DHE-RSA-CAMELLIA256-SHA CAMELLIA256-SHA DHE-RSA-CAMELLIA128-SHA CAMELLIA128-SHA DES-CBC3-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- but also supports higher protocols (possible mitigation): TLSv1.1 TLSv1.2"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: not vulnerable"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.8",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.8",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "HIGH",
+                                "finding"      : "SSLv3 is offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "CRITICAL",
+                                "finding"      : "TLSv1.1 is not offered, and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLSv1.2 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable, no heartbeat extension"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: not vulnerable, session IDs were returned but memory fragments do not differ"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : VULNERABLE, DoS threat"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: VULNERABLE, uses SSLv3+CBC"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "HIGH",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507): Downgrade attack prevention NOT supported and vulnerable to POODLE SSL"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=FCEA608658F91F5EAD9CC6782C62661C50873C809186751F1CF2F1BAEC1F7A9D"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "no DH key detected"
+                           },{
+                                "id"           : "cbc_ssl3",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for SSL3: AES256-SHA AES128-SHA DES-CBC3-SHA"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: AES256-SHA AES128-SHA DES-CBC3-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- and no higher protocols as mitigation supported"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: RC4-SHA RC4-MD5"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.9",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.9",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv3 is not offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.1 is offered"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLSv1.2 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable, no heartbeat extension"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: no session ticket extension"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : VULNERABLE, DoS threat"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: not vulnerable"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507): Downgrade attack prevention NOT supported"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32: not vulnerable"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=FCEA608658F91F5EAD9CC6782C62661C50873C809186751F1CF2F1BAEC1F7A9D"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "common prime 'sun.security.provider/768-bit DSA group with 160-bit prime order subgroup' detected"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: ECDHE-RSA-AES128-SHA DHE-RSA-AES128-SHA AES128-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- but also supports higher protocols (possible mitigation): TLSv1.1"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: RC4-SHA"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.9",
+                    "port"            : "8443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.9",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv3 is not offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.1 is offered"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "OK",
+                                "finding"      : "TLSv1.2 is offered"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : http/1.1, http/1.0 (advertised)"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable, no heartbeat extension"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "DEBUG",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: # of TLS Session IDs detected: 0, C9E475D8F52663B13A9FB008C881EF91,8EB43B537B478E822C24DE6621D58831,D7E1033F8B55004FCDCC7ED5FDA79D02"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : VULNERABLE, DoS threat"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: not vulnerable"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507) (experimental) : some unexpected 'handshake failure' instead of 'inappropriate fallback' (likely: warning)"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=FCEA608658F91F5EAD9CC6782C62661C50873C809186751F1CF2F1BAEC1F7A9D"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "no DH key detected"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: AES256-SHA CAMELLIA256-SHA AES128-SHA CAMELLIA128-SHA DES-CBC3-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- but also supports higher protocols (possible mitigation): TLSv1.1 TLSv1.2"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: RC4-SHA"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.10",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.10",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "CRITICAL",
+                                "finding"      : "SSLv2 offered, vulnerable to DROWN attack.  Detected ciphers: 2"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "HIGH",
+                                "finding"      : "SSLv3 is offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "CRITICAL",
+                                "finding"      : "TLSv1.1 is not offered, and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "MEDIUM",
+                                "finding"      : "TLSv1.2: server closed TCP connection"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable, no heartbeat extension"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: no session ticket extension"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : VULNERABLE, DoS threat"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: VULNERABLE, uses SSLv3+CBC"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "HIGH",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507): Downgrade attack prevention NOT supported and vulnerable to POODLE SSL"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "CRITICAL",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "VULNERABLE, SSLv2 offered with 2 ciphers. Make sure you don't use this certificate elsewhere, see https://censys.io/ipv4?q=DB0E5C4F5DC7ECBE672A454D259DFD54F2C0E77B66E56000073A7F3A9FF0DE2C"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "no DH key detected"
+                           },{
+                                "id"           : "cbc_ssl3",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for SSL3: DES-CBC3-SHA"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: AES128-SHA AES256-SHA DES-CBC3-SHA ECDHE-RSA-AES128-SHA ECDHE-RSA-AES256-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- and no higher protocols as mitigation supported"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: RC4-SHA RC4-MD5 RC4-MD5"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ,
+          {
+                    "target host"     : "185.74.235.13",
+                    "port"            : "443",
+                    "service"         : "Service detected: HTTP",
+                    "ip"              : "185.74.235.13",
+                    "protocols"         : [
+                            {
+                                "id"           : "sslv2",
+                                "severity"     : "OK",
+                                "finding"      : "SSLv2 is not offered"
+                           },{
+                                "id"           : "sslv3",
+                                "severity"     : "HIGH",
+                                "finding"      : "SSLv3 is offered"
+                           },{
+                                "id"           : "tls1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.0 is offered"
+                           },{
+                                "id"           : "tls1_1",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.1 is offered"
+                           },{
+                                "id"           : "tls1_2",
+                                "severity"     : "OK",
+                                "finding"      : "TLSv1.2 is offered"
+                           },{
+                                "id"           : "tls1_3",
+                                "severity"     : "INFO",
+                                "finding"      : "TLSv1.3 is not offered and downgraded to a weaker protocol"
+                           },{
+                                "id"           : "spdy_npn",
+                                "severity"     : "INFO",
+                                "finding"      : "SPDY/NPN : not offered"
+                           },{
+                                "id"           : "https_alpn",
+                                "severity"     : "INFO",
+                                "finding"      : "HTTP2/ALPN : not offered"
+                           }
+                    ],
+                    "ciphers"           : [
+
+                    ],
+                    "pfs"               : [
+
+                    ],
+                    "serverPreferences" : [
+
+                    ],
+                    "serverDefaults"    : [
+
+                    ],
+                    "headerResponse"    : [
+
+                    ],
+                    "cipherTests"       : [
+                            {
+                                "id"           : "heartbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0160",
+                                "cwe"          : "CWE-119",
+                                "finding"      : "Heartbleed: not vulnerable , timed out"
+                           },{
+                                "id"           : "ccs",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2014-0224",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CCS: not vulnerable"
+                           },{
+                                "id"           : "ticketbleed",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-9244",
+                                "cwe"          : "CWE-200",
+                                "finding"      : "Ticketbleed: not vulnerable, session IDs were returned but memory fragments do not differ"
+                           },{
+                                "id"           : "ROBOT",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2017-17382 CVE-2017-17427 CVE-2017-17428 CVE-2017-13098 CVE-2017-1000385 CVE-2017-13099 CVE-2016-6883 CVE-2012-5081",
+                                "finding"      : "ROBOT: not vulnerable"
+                           },{
+                                "id"           : "secure_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Renegotiation: not vulnerable"
+                           },{
+                                "id"           : "sec_client_renego",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2009-3555",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "Secure Client-Initiated Renegotiation : not vulnerable"
+                           },{
+                                "id"           : "crime",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2012-4929",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "CRIME, TLS: Not vulnerable"
+                           },{
+                                "id"           : "breach",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2013-3587",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "BREACH: no HTTP compression  - only supplied '/' tested"
+                           },{
+                                "id"           : "poodle_ssl",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2014-3566",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "POODLE, SSL: VULNERABLE, uses SSLv3+CBC"
+                           },{
+                                "id"           : "fallback_scsv",
+                                "severity"     : "OK",
+                                "finding"      : "TLS_FALLBACK_SCSV (RFC 7507) (experimental) : Downgrade attack prevention supported"
+                           },{
+                                "id"           : "sweet32",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2016-2183, CVE-2016-6329",
+                                "cwe"          : "CWE-327",
+                                "finding"      : "SWEET32, uses 64 bit block ciphers"
+                           },{
+                                "id"           : "freak",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-0204",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "FREAK: not vulnerable"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "not vulnerable to DROWN on this host and port"
+                           },{
+                                "id"           : "drown",
+                                "severity"     : "INFO",
+                                "cve"          : "CVE-2016-0800, CVE-2016-0703",
+                                "finding"      : "make sure you don't use this certificate elsewhere with SSLv2 enabled services, see https://censys.io/ipv4?q=82D9087E66C8436D7E57E5C95D593250241589A07FFF7D7B09307D9E99A3E502"
+                           },{
+                                "id"           : "LOGJAM_common primes",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2015-4000",
+                                "finding"      : "common prime 'RFC3526/Oakley Group 14' detected"
+                           },{
+                                "id"           : "logjam",
+                                "severity"     : "OK",
+                                "cve"          : "CVE-2015-4000",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "LOGJAM: not vulnerable, no DH EXPORT ciphers,"
+                           },{
+                                "id"           : "cbc_ssl3",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for SSL3: ECDHE-RSA-AES256-SHA DHE-RSA-AES256-SHA DHE-RSA-CAMELLIA256-SHA AES256-SHA CAMELLIA256-SHA ECDHE-RSA-AES128-SHA DHE-RSA-AES128-SHA DHE-RSA-SEED-SHA DHE-RSA-CAMELLIA128-SHA AES128-SHA SEED-SHA CAMELLIA128-SHA IDEA-CBC-SHA ECDHE-RSA-DES-CBC3-SHA EDH-RSA-DES-CBC3-SHA DES-CBC3-SHA EDH-RSA-DES-CBC-SHA DES-CBC-SHA"
+                           },{
+                                "id"           : "cbc_tls1",
+                                "severity"     : "MEDIUM",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: CBC ciphers for TLS1: ECDHE-RSA-AES256-SHA DHE-RSA-AES256-SHA DHE-RSA-CAMELLIA256-SHA AES256-SHA CAMELLIA256-SHA ECDHE-RSA-AES128-SHA DHE-RSA-AES128-SHA DHE-RSA-SEED-SHA DHE-RSA-CAMELLIA128-SHA AES128-SHA SEED-SHA CAMELLIA128-SHA IDEA-CBC-SHA ECDHE-RSA-DES-CBC3-SHA EDH-RSA-DES-CBC3-SHA DES-CBC3-SHA EDH-RSA-DES-CBC-SHA DES-CBC-SHA"
+                           },{
+                                "id"           : "beast",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2011-3389",
+                                "cwe"          : "CWE-20",
+                                "finding"      : "BEAST: VULNERABLE -- but also supports higher protocols (possible mitigation): TLSv1.1 TLSv1.2"
+                           },{
+                                "id"           : "lucky13",
+                                "severity"     : "LOW",
+                                "cve"          : "CVE-2013-0169",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "potentially vulnerable to LUCKY13, uses cipher block chaining (CBC) ciphers with TLS. Check patches"
+                           },{
+                                "id"           : "rc4",
+                                "severity"     : "HIGH",
+                                "cve"          : "CVE-2013-2566, CVE-2015-2808",
+                                "cwe"          : "CWE-310",
+                                "finding"      : "RC4: VULNERABLE, Detected ciphers: ECDHE-RSA-RC4-SHA RC4-SHA RC4-MD5"
+                           }
+                    ],
+                    "browserSimulations": [
+
+                    ],
+                    "grease"            : [
+
+                    ]
+          }
+          ],
+          "scanTime"  : "0"
+}
