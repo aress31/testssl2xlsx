@@ -48,7 +48,7 @@ def parse_args():
             "lucky13",
             "poodle_ssl",
             "rc4",
-            "sweet32",
+            "sweet32"
         ],
         default=[
             "beast",
@@ -248,7 +248,6 @@ def parse_host_protocol(workbook, data):
                     table_headers, table_data)
 
 
-# Need to order and sort the table_data
 def parse_host_vulns(workbook, data, filters):
     table_data = []
     table_headers = [
