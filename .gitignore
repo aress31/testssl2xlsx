@@ -97,3 +97,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Custom entries
+.test-data/
+*.xlsx
