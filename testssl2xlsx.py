@@ -48,6 +48,7 @@ def parse_args():
             "lucky13",
             "poodle_ssl",
             "rc4",
+            "robot",
             "sweet32"
         ],
         default=[
@@ -59,6 +60,7 @@ def parse_args():
             "lucky13",
             "poodle_ssl",
             "rc4",
+            "robot",
             "sweet32"
         ],
         dest="filters",
@@ -256,7 +258,7 @@ def parse_host_vulns(workbook, data, filters):
     ]
 
     for vulnerability in filters:
-        table_headers.append({"header": vulnerability.upper()})
+        table_headers.append({"header": vulnerability})
 
     for values in data["scanResult"]:
         host_ip = values["ip"]
@@ -268,8 +270,8 @@ def parse_host_vulns(workbook, data, filters):
         vulns = {}
 
         for cipherTest in values["cipherTests"]:
-            if cipherTest["id"] in filters:
-                vulns[cipherTest["id"]] = cipherTest["severity"]
+            if cipherTest["id"].upper() in filters:
+                vulns[cipherTest["id"].upper()] = cipherTest["severity"]
 
         # this step is necessary to alphabetically sort the vulnerabilities
         # in order to have the severities matching the right columns
@@ -298,7 +300,7 @@ def parse_host_vuln(workbook, data, filters):
         port = values["port"]
 
         for cipherTest in values["cipherTests"]:
-            if cipherTest["id"] in filters:
+            if cipherTest["id"].upper() in filters:
                 table_data.append(
                     [
                         host_ip,
@@ -361,13 +363,17 @@ def main():
             RESULT,
             "generating 'Host vs Vulnerabilities' worksheet..."
         )
-        parse_host_vulns(workbook, data, sorted(args.filters))
+        parse_host_vulns(
+            workbook, data, sorted([x.upper() for x in args.filters])
+        )
 
         logging.log(
             RESULT,
             "generating 'Host vs Vulnerability' worksheet..."
         )
-        parse_host_vuln(workbook, data, sorted(args.filters))
+        parse_host_vuln(
+            workbook, data, sorted([x.upper() for x in args.filters])
+        )
 
         workbook.close()
     except KeyboardInterrupt:
