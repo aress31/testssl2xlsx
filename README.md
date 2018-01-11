@@ -31,9 +31,8 @@ The following worksheets are generated:
       -v, --verbose         enable output verbosity
 
 ## Possible Improvements
-* Adding new features.
-* Adding new relevant worksheets.
-* Source code optimisation.
+- [ ] Adding new features.
+- [ ] Source code optimisation.
 
 ## Licenses
 ### testssl2xlsx
