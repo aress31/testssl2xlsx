@@ -12,23 +12,27 @@ The following worksheets are generated:
 * `Host vs Vulnerability`
 
 ## Installation
-    $ git clone https://github.com/AresS31/testssl2xlsx
-    # python -m pip install -r testssl2xlsx/requirements.txt
+```
+$ git clone https://github.com/AresS31/testssl2xlsx
+# python -m pip install -r testssl2xlsx/requirements.txt
+ ```
 
 ## Usage
-    $ python testssl2xlsx.py [-h]
-                       [-f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]]
-                       -iJ INPUT_FILE [-oX OUTPUT_FILE] [-v]
+```
+$ python testssl2xlsx.py [-h]
+                   [-f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]]
+                   -iJ INPUT_FILE [-oX OUTPUT_FILE] [-v]
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      -f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...], --filters {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]
-                            vulnerability/ies to process
-      -iJ INPUT_FILE, --input-json INPUT_FILE
-                            pretty JSON file containing the testssl results
-      -oX OUTPUT_FILE, --output-xlsx OUTPUT_FILE
-                            XLSX file containing the output results
-      -v, --verbose         enable output verbosity
+optional arguments:
+  -h, --help            show this help message and exit
+  -f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...], --filters {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]
+                        vulnerability/ies to process
+  -iJ INPUT_FILE, --input-json INPUT_FILE
+                        pretty JSON file containing the testssl results
+  -oX OUTPUT_FILE, --output-xlsx OUTPUT_FILE
+                        XLSX file containing the output results
+  -v, --verbose         enable output verbosity
+```
 
 ## Possible Improvements
 - [ ] Adding new features.
