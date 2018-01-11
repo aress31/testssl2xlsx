@@ -1,5 +1,7 @@
 ![testssl2xlsx](images/testssl2xlsx.png)
 # testssl2xlsx
+[![Language](https://img.shields.io/badge/Lang-Python-blue.svg)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This script parses `testssl pretty JSON` scans results into `Excel` tables (`.xlsx`) to facilitate the reporting process of penetration tests, especially useful when dealing with big scopes. Having scans results organised in `Excel` tables also allow customers and testers to use `Excel` strong filtering capabilities. 
 
