@@ -261,22 +261,23 @@ def parse_host_vulns(workbook, data, filters):
         table_headers.append({"header": vulnerability})
 
     for values in data["scanResult"]:
-        host_ip = values["ip"]
-        port = values["port"]
-        data = [
-                host_ip,
-                int(port)
-        ]
+        data = []
         vulns = {}
+        vulns["Host IP"] = values["ip"]
+        vulns["Port"] = int(values["port"])
 
         for cipherTest in values["cipherTests"]:
             if cipherTest["id"].upper() in filters:
                 vulns[cipherTest["id"].upper()] = cipherTest["severity"]
 
-        # this step is necessary to alphabetically sort the vulnerabilities
-        # in order to have the severities matching the right columns
-        for key, value in sorted(vulns.items()):
-            data.append(value)
+        # putting the values at the right index
+        headers = [d["header"] for d in table_headers]
+
+        for header in headers:
+                if header in vulns.keys():
+                    data.insert(headers.index(header), vulns.get(header))
+                else:
+                    data.insert(headers.index(header), "N/A")
 
         table_data.append(data)
 
