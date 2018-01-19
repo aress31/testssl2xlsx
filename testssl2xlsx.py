@@ -178,8 +178,6 @@ def parse_host_protocols(workbook, data):
                     table_headers, table_data)
 
 
-# rework this method to make it more modular like
-# parse_host_vulns
 def parse_host_protocol(workbook, data):
     table_data = []
     table_headers = [
