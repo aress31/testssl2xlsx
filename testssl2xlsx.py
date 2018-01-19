@@ -24,6 +24,28 @@ from collections import OrderedDict
 
 # custom levels for the logging lib
 RESULT = 21
+# add or remove entries from the lists below in order to enable/disable
+# reporting for the selected entries
+protocols = [
+    "sslv2",
+    "sslv3",
+    "tls1",
+    "tls1_1",
+    "tls1_2",
+    "tls1_3"
+]
+vulnerabilities = [
+    "beast",
+    "breach",
+    "crime",
+    "freak",
+    "logjam",
+    "lucky13",
+    "poodle_ssl",
+    "rc4",
+    "robot",
+    "sweet32"
+]
 
 
 def parse_args():
@@ -39,30 +61,8 @@ def parse_args():
     parser.add_argument(
         "-f",
         "--filters",
-        choices=[
-            "beast",
-            "breach",
-            "crime",
-            "freak",
-            "logjam",
-            "lucky13",
-            "poodle_ssl",
-            "rc4",
-            "robot",
-            "sweet32"
-        ],
-        default=[
-            "beast",
-            "breach",
-            "crime",
-            "freak",
-            "logjam",
-            "lucky13",
-            "poodle_ssl",
-            "rc4",
-            "robot",
-            "sweet32"
-        ],
+        choices=vulnerabilities,
+        default=vulnerabilities,
         dest="filters",
         help="vulnerability/ies to process",
         nargs='+',
@@ -143,69 +143,36 @@ def parse_host_protocols(workbook, data):
     table_data = []
     table_headers = [
         {"header": "Host IP"},
-        {"header": "Port"},
-        {"header": "SSLv2"},
-        {"header": "SSLv3"},
-        {"header": "TLSv1.0"},
-        {"header": "TLSv1.1"},
-        {"header": "TLSv1.2"},
-        {"header": "TLSv1.3"}
+        {"header": "Port"}
     ]
 
+    for protocol in protocols:
+        table_headers.append({"header": protocol.upper().replace('_', '.')})
+
     for values in data["scanResult"]:
-        host_ip = values["ip"]
-        port = values["port"]
-        sslv2 = "N/A"
-        sslv3 = "N/A"
-        tlsv1 = "N/A"
-        tlsv1_1 = "N/A"
-        tlsv1_2 = "N/A"
-        tlsv1_3 = "N/A"
+        data = []
+        d = {
+            "Host IP": values["ip"],
+            "Port": int(values["port"])
+        }
 
         for protocol in values["protocols"]:
-            if protocol["id"] == "sslv2":
+            if protocol["id"] in protocols:
                 if "is offered" in protocol["finding"]:
-                    sslv2 = "YES"
+                    d[protocol["id"].upper().replace('_', '.')] = "YES"
                 else:
-                    sslv2 = "NO"
-            elif protocol["id"] == "sslv3":
-                if "is offered" in protocol["finding"]:
-                    sslv3 = "YES"
-                else:
-                    sslv3 = "NO"
-            elif protocol["id"] == "tls1":
-                if "is offered" in protocol["finding"]:
-                    tlsv1 = "YES"
-                else:
-                    tlsv1 = "NO"
-            elif protocol["id"] == "tls1_1":
-                if "is offered" in protocol["finding"]:
-                    tlsv1_1 = "YES"
-                else:
-                    tlsv1_1 = "NO"
-            elif protocol["id"] == "tls1_2":
-                if "is offered" in protocol["finding"]:
-                    tlsv1_2 = "YES"
-                else:
-                    tlsv1_2 = "NO"
-            elif protocol["id"] == "tls1_3":
-                if "is offered" in protocol["finding"]:
-                    tlsv1_3 = "YES"
-                else:
-                    tlsv1_3 = "NO"
+                    d[protocol["id"].upper().replace('_', '.')] = "NO"
 
-        table_data.append(
-            [
-                host_ip,
-                int(port),
-                sslv2,
-                sslv3,
-                tlsv1,
-                tlsv1_1,
-                tlsv1_2,
-                tlsv1_3
-            ]
-        )
+        # putting the values at the right index
+        headers = [x["header"] for x in table_headers]
+
+        for header in headers:
+            if header in d.keys():
+                data.insert(headers.index(header), d.get(header))
+            else:
+                data.insert(headers.index(header), "N/A")
+
+        table_data.append(data)
 
     write_worksheet(workbook, "Host vs Protocols",
                     table_headers, table_data)
@@ -222,31 +189,15 @@ def parse_host_protocol(workbook, data):
     ]
 
     for values in data["scanResult"]:
-        host_ip = values["ip"]
-        port = values["port"]
-        protocol_version = "N/A"
-
         for protocol in values["protocols"]:
-            if protocol["id"] == "sslv2":
-                protocol_version = "SSLv2"
-            elif protocol["id"] == "sslv3":
-                protocol_version = "SSLv3"
-            elif protocol["id"] == "tls1":
-                protocol_version = "TLSv1"
-            elif protocol["id"] == "tls1_1":
-                protocol_version = "TLSv1.1"
-            elif protocol["id"] == "tls1_2":
-                protocol_version = "TLSv1.2"
-            elif protocol["id"] == "tls1_3":
-                protocol_version = "TLSv1.3"
-
-            table_data.append(
-                [
-                    host_ip,
-                    int(port),
-                    protocol_version
-                ]
-            )
+            if protocol["id"] in protocols:
+                table_data.append(
+                    [
+                        values["ip"],
+                        int(values["port"]),
+                        protocol["id"].upper().replace('_', '.')
+                    ]
+                )
 
     write_worksheet(workbook, "Host vs Protocol",
                     table_headers, table_data)
@@ -264,22 +215,23 @@ def parse_host_vulns(workbook, data, filters):
 
     for values in data["scanResult"]:
         data = []
-        vulns = {}
-        vulns["Host IP"] = values["ip"]
-        vulns["Port"] = int(values["port"])
+        d = {
+            "Host IP": values["ip"],
+            "Port": int(values["port"])
+        }
 
         for cipherTest in values["cipherTests"]:
             if cipherTest["id"].upper() in filters:
-                vulns[cipherTest["id"].upper()] = cipherTest["severity"]
+                d[cipherTest["id"].upper()] = cipherTest["severity"]
 
         # putting the values at the right index
-        headers = [d["header"] for d in table_headers]
+        headers = [x["header"] for x in table_headers]
 
         for header in headers:
-                if header in vulns.keys():
-                    data.insert(headers.index(header), vulns.get(header))
-                else:
-                    data.insert(headers.index(header), "N/A")
+            if header in d.keys():
+                data.insert(headers.index(header), d.get(header))
+            else:
+                data.insert(headers.index(header), "N/A")
 
         table_data.append(data)
 
@@ -299,15 +251,12 @@ def parse_host_vuln(workbook, data, filters):
     ]
 
     for values in data["scanResult"]:
-        host_ip = values["ip"]
-        port = values["port"]
-
         for cipherTest in values["cipherTests"]:
             if cipherTest["id"].upper() in filters:
                 table_data.append(
                     [
-                        host_ip,
-                        int(port),
+                        values["ip"],
+                        int(values["port"]),
                         cipherTest["id"].upper(),
                         cipherTest["severity"],
                         cipherTest["cve"],
