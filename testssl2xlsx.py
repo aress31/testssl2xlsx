@@ -20,8 +20,6 @@ import sys
 import time
 import xlsxwriter
 
-from collections import OrderedDict
-
 # custom levels for the logging lib
 RESULT = 21
 # add or remove entries from the lists below in order to enable/disable
