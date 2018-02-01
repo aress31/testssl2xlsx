@@ -12,13 +12,13 @@ The following worksheets are generated:
 * `Host vs Vulnerability`
 
 ## Installation
-```
+```shell
 $ git clone https://github.com/AresS31/testssl2xlsx
 # python -m pip install -r testssl2xlsx/requirements.txt
  ```
 
 ## Usage
-```
+```shell
 $ python testssl2xlsx.py [-h]
                    [-f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]]
                    -iJ INPUT_FILE [-oX OUTPUT_FILE] [-v]
@@ -35,12 +35,12 @@ optional arguments:
 ```
 
 ## Possible Improvements
-- [ ] Adding new features.
+- [ ] Adding new features, such as --protocols filtering.
 - [ ] Source code optimisation.
 
 ## Licenses
 ### testssl2xlsx
-Copyright (C) 2017 Alexandre Teyar
+Copyright 2017 - 2018 Alexandre Teyar
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
