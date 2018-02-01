@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#    Copyright (C) 2017 Alexandre Teyar
+#    Copyright 2017 - 2018 Alexandre Teyar
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this output_file except in compliance with the License.
