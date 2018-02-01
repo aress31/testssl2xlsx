@@ -12,13 +12,13 @@ The following worksheets are generated:
 * `Host vs Vulnerability`
 
 ## Installation
-```shell
+```
 $ git clone https://github.com/AresS31/testssl2xlsx
 # python -m pip install -r testssl2xlsx/requirements.txt
  ```
 
 ## Usage
-```shell
+```
 $ python testssl2xlsx.py [-h]
                    [-f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]]
                    -iJ INPUT_FILE [-oX OUTPUT_FILE] [-v]
