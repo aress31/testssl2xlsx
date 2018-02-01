@@ -24,26 +24,28 @@ import xlsxwriter
 RESULT = 21
 # add or remove entries from the lists below in order to enable/disable
 # reporting for the selected entries
-protocols = [
+protocols = sorted([
     "sslv2",
     "sslv3",
     "tls1",
     "tls1_1",
     "tls1_2",
     "tls1_3"
-]
-vulnerabilities = [
+])
+vulnerabilities = sorted([
     "beast",
     "breach",
-    "crime",
+    "crime_tls",
+    "fallback_scsv",
     "freak",
     "logjam",
     "lucky13",
     "poodle_ssl",
     "rc4",
     "robot",
+    "secure_client_renego",
     "sweet32"
-]
+])
 
 
 def parse_args():
@@ -100,41 +102,31 @@ def parse_args():
     return parser.parse_args()
 
 
-def write_worksheet(workbook, worksheet, table_headers, table_data):
+def write_table(worksheet, table_headers, table_data):
     """ Create an Excel worksheet containing the 'table_headers'
         and 'table_data' dataset
     """
-    if not table_data:
-        logging.warning("'{}' could not be created".format(
-            worksheet
-        ))
-        return
-    else:
-        worksheet = workbook.add_worksheet("{}".format(worksheet))
+    column_count = 0
+    row_count = 0
+    table_column_count = len(table_headers) - 1
+    table_row_count = len(table_data)
 
-        column_count = 0
-        row_count = 0
-        table_column_count = len(table_headers) - 1
-        table_row_count = len(table_data)
+    logging.debug("{}".format(table_headers))
+    logging.debug("{}".format(table_data))
 
-        logging.debug("{}".format(table_headers))
-        logging.debug("{}".format(table_data))
-
-        worksheet.add_table(
-            row_count,
-            column_count,
-            table_row_count,
-            table_column_count,
-            {
-                "banded_rows": True,
-                "columns": table_headers,
-                "data": table_data,
-                "first_column": True,
-                "style": "Table Style Medium 1"
-            }
-        )
-
-        worksheet.freeze_panes(0, 1)
+    worksheet.add_table(
+        row_count,
+        column_count,
+        table_row_count,
+        table_column_count,
+        {
+            "banded_rows": True,
+            "columns": table_headers,
+            "data": table_data,
+            "first_column": True,
+            "style": "Table Style Medium 1"
+        }
+    )
 
 
 def parse_host_protocols(workbook, data):
@@ -145,23 +137,23 @@ def parse_host_protocols(workbook, data):
     ]
 
     for protocol in protocols:
-        table_headers.append({"header": protocol.upper().replace('_', '.')})
+        table_headers.append({"header": protocol.upper()})
 
     for values in data["scanResult"]:
-        data = []
         d = {
             "Host IP": values["ip"],
             "Port": int(values["port"])
         }
 
         for protocol in values["protocols"]:
-            if protocol["id"] in protocols:
-                if "is offered" in protocol["finding"]:
-                    d[protocol["id"].upper().replace('_', '.')] = "YES"
+            if protocol["id"].upper() in [x.upper() for x in protocols]:
+                if protocol["finding"] == "offered":
+                    d[protocol["id"].upper()] = "YES"
                 else:
-                    d[protocol["id"].upper().replace('_', '.')] = "NO"
+                    d[protocol["id"].upper()] = "NO"
 
         # putting the values at the right index
+        data = []
         headers = [x["header"] for x in table_headers]
 
         for header in headers:
@@ -172,8 +164,8 @@ def parse_host_protocols(workbook, data):
 
         table_data.append(data)
 
-    write_worksheet(workbook, "Host vs Protocols",
-                    table_headers, table_data)
+    worksheet = workbook.add_worksheet("Host vs Protocols")
+    write_table(worksheet, table_headers, table_data)
 
 
 def parse_host_protocol(workbook, data):
@@ -181,22 +173,25 @@ def parse_host_protocol(workbook, data):
     table_headers = [
         {"header": "Host IP"},
         {"header": "Port"},
-        {"header": "Protocol"}
+        {"header": "Supported Protocol"},
+        {"header": "Severity"}
     ]
 
     for values in data["scanResult"]:
         for protocol in values["protocols"]:
-            if protocol["id"] in protocols:
-                table_data.append(
-                    [
-                        values["ip"],
-                        int(values["port"]),
-                        protocol["id"].upper().replace('_', '.')
-                    ]
-                )
+            if protocol["id"].upper() in [x.upper() for x in protocols]:
+                if protocol["finding"] == "offered":
+                    table_data.append(
+                        [
+                            values["ip"],
+                            int(values["port"]),
+                            protocol["id"].upper(),
+                            protocol["severity"]
+                        ]
+                    )
 
-    write_worksheet(workbook, "Host vs Protocol",
-                    table_headers, table_data)
+    worksheet = workbook.add_worksheet("Host vs Protocol")
+    write_table(worksheet, table_headers, table_data)
 
 
 def parse_host_vulns(workbook, data, filters):
@@ -207,20 +202,20 @@ def parse_host_vulns(workbook, data, filters):
     ]
 
     for vulnerability in filters:
-        table_headers.append({"header": vulnerability})
+        table_headers.append({"header": vulnerability.upper()})
 
     for values in data["scanResult"]:
-        data = []
         d = {
             "Host IP": values["ip"],
             "Port": int(values["port"])
         }
 
-        for cipherTest in values["cipherTests"]:
-            if cipherTest["id"].upper() in filters:
-                d[cipherTest["id"].upper()] = cipherTest["severity"]
+        for vulnerability in values["vulnerabilities"]:
+            if vulnerability["id"].upper() in [x.upper() for x in filters]:
+                d[vulnerability["id"].upper()] = vulnerability["severity"]
 
         # putting the values at the right index
+        data = []
         headers = [x["header"] for x in table_headers]
 
         for header in headers:
@@ -231,37 +226,66 @@ def parse_host_vulns(workbook, data, filters):
 
         table_data.append(data)
 
-    write_worksheet(workbook, "Host vs Vulnerabilities",
-                    table_headers, table_data)
+    worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
+    write_table(worksheet, table_headers, table_data)
 
 
 def parse_host_vuln(workbook, data, filters):
     table_data = []
+    vcenter = workbook.add_format({"valign": "vcenter"})
     table_headers = [
-        {"header": "Host IP"},
-        {"header": "Port"},
-        {"header": "Vulnerability"},
-        {"header": "Severity"},
-        {"header": "CVE"},
-        {"header": "Information"},
+        {
+            "header": "Host IP",
+            "format": vcenter
+        },
+        {
+            "header": "Port",
+            "format": vcenter
+        },
+        {
+            "header": "Vulnerability",
+            "format": vcenter
+        },
+        {
+            "header": "Severity",
+            "format": vcenter
+        },
+        {
+            "header": "CVE",
+            "format": workbook.add_format(
+                {
+                    "text_wrap": 1,
+                    "valign": "top"
+                }
+            )
+        },
+        {
+            "header": "Information",
+            "format": vcenter
+        },
     ]
 
     for values in data["scanResult"]:
-        for cipherTest in values["cipherTests"]:
-            if cipherTest["id"].upper() in filters:
+        for vulnerability in values["vulnerabilities"]:
+            if vulnerability["id"].upper() in [x.upper() for x in filters]:
                 table_data.append(
                     [
                         values["ip"],
                         int(values["port"]),
-                        cipherTest["id"].upper(),
-                        cipherTest["severity"],
-                        cipherTest["cve"],
-                        cipherTest["finding"]
+                        vulnerability["id"].upper(),
+                        vulnerability["severity"],
+                        # avoid to raise KeyError exceptions for entries with
+                        # no CVE defined
+                        # replace comma and space with return line to prevent
+                        # super wide cells
+                        vulnerability.get("cve", "N/A").
+                        replace(", ", "\r\n").replace(" ", "\r\n"),
+                        vulnerability["finding"]
                     ]
                 )
 
-    write_worksheet(workbook, "Host vs Vulnerability",
-                    table_headers, table_data)
+    worksheet = workbook.add_worksheet("Host vs Vulnerability")
+    write_table(worksheet, table_headers, table_data)
 
 
 def main():
@@ -311,17 +335,13 @@ def main():
             RESULT,
             "generating 'Host vs Vulnerabilities' worksheet..."
         )
-        parse_host_vulns(
-            workbook, data, sorted([x.upper() for x in args.filters])
-        )
+        parse_host_vulns(workbook, data, sorted(args.filters))
 
         logging.log(
             RESULT,
             "generating 'Host vs Vulnerability' worksheet..."
         )
-        parse_host_vuln(
-            workbook, data, sorted([x.upper() for x in args.filters])
-        )
+        parse_host_vuln(workbook, data, sorted(args.filters))
 
         workbook.close()
     except KeyboardInterrupt:
