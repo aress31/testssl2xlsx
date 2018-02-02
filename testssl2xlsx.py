@@ -278,8 +278,7 @@ def parse_host_vuln(workbook, data, filters):
                         # no CVE defined
                         # replace comma and space with return line to prevent
                         # super wide cells
-                        vulnerability.get("cve", "N/A").
-                        replace(", ", "\r\n").replace(" ", "\r\n"),
+                        vulnerability.get("cve", "N/A").replace(" ", "\r\n"),
                         vulnerability["finding"]
                     ]
                 )
