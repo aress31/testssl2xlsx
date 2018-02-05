@@ -22,30 +22,69 @@ import xlsxwriter
 
 # custom levels for the logging lib
 RESULT = 21
+
 # add or remove entries from the lists below in order to enable/disable
-# reporting for the selected entries
+# reporting for the selected entries - respect the case -
+certificates = {
+    "cert_chain_of_trust": {
+        "prettyName": "Chain of Trust"
+    },
+    "cert_expiration_status": {
+        "prettyName": "Expiration Status"
+    },
+    "cert_signatureAlgorithm": {
+        "prettyName": "Signature Algorithm"
+    },
+    "cert_trust": {
+        "prettyName": "Trust"
+    }
+}
 protocols = sorted([
-    "sslv2",
-    "sslv3",
-    "tls1",
-    "tls1_1",
-    "tls1_2",
-    "tls1_3"
+    "SSLv2",
+    "SSLv3",
+    "TLS1",
+    "TLS1_1",
+    "TLS1_2",
+    "TLS1_3"
 ])
-vulnerabilities = sorted([
-    "beast",
-    "breach",
-    "crime_tls",
-    "fallback_scsv",
-    "freak",
-    "logjam",
-    "lucky13",
-    "poodle_ssl",
-    "rc4",
-    "robot",
-    "secure_client_renego",
-    "sweet32"
-])
+vulnerabilities = {
+    "BEAST": {
+        "prettyName": "BEAST"
+    },
+    "BREACH": {
+        "prettyName": "BREACH"
+    },
+    "CRIME_TLS": {
+        "prettyName": "CRIME"
+    },
+    "fallback_SCSV": {
+        "prettyName": "Fallback SCSV"
+    },
+    "FREAK": {
+        "prettyName": "FREAK"
+    },
+    "LOGJAM": {
+        "prettyName": "Logjam"
+    },
+    "LUCKY13": {
+        "prettyName": "Lucky13"
+    },
+    "POODLE_SSL": {
+        "prettyName": "POODLE"
+    },
+    "RC4": {
+        "prettyName": "RC4"
+    },
+    "ROBOT": {
+        "prettyName": "ROBOT"
+    },
+    "secure_client_renego": {
+        "prettyName": "Secure Client Renegotiation"
+    },
+    "SWEET32": {
+        "prettyName": "Sweet32"
+    },
+}
 
 
 def parse_args():
@@ -56,18 +95,6 @@ def parse_args():
             "Parse testssl pretty JSON files into an Excel spreadsheet for "
             "quicker and easier reporting"
         )
-    )
-
-    parser.add_argument(
-        "-f",
-        "--filters",
-        choices=vulnerabilities,
-        default=vulnerabilities,
-        dest="filters",
-        help="vulnerability/ies to process",
-        nargs='+',
-        required=False,
-        type=str
     )
 
     parser.add_argument(
@@ -100,6 +127,29 @@ def parse_args():
     )
 
     return parser.parse_args()
+
+
+def insert(headers, d):
+    """ Insert the values at the correct column index
+    """
+    data = []
+
+    for key, values in d.items():
+        if isinstance(values, dict):
+            if values["prettyName"] in headers:
+                data.insert(
+                    headers.index(values["prettyName"]),
+                    values.get("severity")
+                )
+            else:
+                data.insert(headers.index(values["prettyName"]), "N/A")
+        else:
+            if key in headers:
+                data.insert(headers.index(key), values)
+            else:
+                data.insert(headers.index(key), "N/A")
+
+    return data
 
 
 def write_table(worksheet, table_headers, table_data):
@@ -137,7 +187,7 @@ def parse_host_protocols(workbook, data):
     ]
 
     for protocol in protocols:
-        table_headers.append({"header": protocol.upper()})
+        table_headers.append({"header": protocol})
 
     for values in data["scanResult"]:
         d = {
@@ -146,23 +196,13 @@ def parse_host_protocols(workbook, data):
         }
 
         for protocol in values["protocols"]:
-            if protocol["id"].upper() in [x.upper() for x in protocols]:
+            if protocol["id"] in [x for x in protocols]:
                 if protocol["finding"] == "offered":
-                    d[protocol["id"].upper()] = "YES"
+                    d[protocol["id"]] = "YES"
                 else:
-                    d[protocol["id"].upper()] = "NO"
+                    d[protocol["id"]] = "NO"
 
-        # putting the values at the right index
-        data = []
-        headers = [x["header"] for x in table_headers]
-
-        for header in headers:
-            if header in d.keys():
-                data.insert(headers.index(header), d.get(header))
-            else:
-                data.insert(headers.index(header), "N/A")
-
-        table_data.append(data)
+        table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Protocols")
     write_table(worksheet, table_headers, table_data)
@@ -179,13 +219,13 @@ def parse_host_protocol(workbook, data):
 
     for values in data["scanResult"]:
         for protocol in values["protocols"]:
-            if protocol["id"].upper() in [x.upper() for x in protocols]:
+            if protocol["id"] in [x for x in protocols]:
                 if protocol["finding"] == "offered":
                     table_data.append(
                         [
                             values["ip"],
                             int(values["port"]),
-                            protocol["id"].upper(),
+                            protocol["id"],
                             protocol["severity"]
                         ]
                     )
@@ -194,15 +234,15 @@ def parse_host_protocol(workbook, data):
     write_table(worksheet, table_headers, table_data)
 
 
-def parse_host_vulns(workbook, data, filters):
+def parse_host_vulnerabilities(workbook, data):
     table_data = []
     table_headers = [
         {"header": "Host IP"},
         {"header": "Port"}
     ]
 
-    for vulnerability in filters:
-        table_headers.append({"header": vulnerability.upper()})
+    for values in vulnerabilities.values():
+        table_headers.append({"header": values["prettyName"]})
 
     for values in data["scanResult"]:
         d = {
@@ -211,26 +251,20 @@ def parse_host_vulns(workbook, data, filters):
         }
 
         for vulnerability in values["vulnerabilities"]:
-            if vulnerability["id"].upper() in [x.upper() for x in filters]:
-                d[vulnerability["id"].upper()] = vulnerability["severity"]
+            if vulnerability["id"] in [x for x in vulnerabilities.keys()]:
+                d[vulnerability["id"]] = {
+                    "prettyName": vulnerabilities[vulnerability["id"]]
+                    ["prettyName"],
+                    "severity": vulnerability["severity"]
+                }
 
-        # putting the values at the right index
-        data = []
-        headers = [x["header"] for x in table_headers]
-
-        for header in headers:
-            if header in d.keys():
-                data.insert(headers.index(header), d.get(header))
-            else:
-                data.insert(headers.index(header), "N/A")
-
-        table_data.append(data)
+        table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
     write_table(worksheet, table_headers, table_data)
 
 
-def parse_host_vuln(workbook, data, filters):
+def parse_host_vulnerability(workbook, data):
     table_data = []
     vcenter = workbook.add_format({"valign": "vcenter"})
     table_headers = [
@@ -262,17 +296,17 @@ def parse_host_vuln(workbook, data, filters):
         {
             "header": "Information",
             "format": vcenter
-        },
+        }
     ]
 
     for values in data["scanResult"]:
         for vulnerability in values["vulnerabilities"]:
-            if vulnerability["id"].upper() in [x.upper() for x in filters]:
+            if vulnerability["id"] in [x for x in vulnerabilities.keys()]:
                 table_data.append(
                     [
                         values["ip"],
                         int(values["port"]),
-                        vulnerability["id"].upper(),
+                        vulnerabilities[vulnerability["id"]]["prettyName"],
                         vulnerability["severity"],
                         # avoid to raise KeyError exceptions for entries with
                         # no CVE defined
@@ -284,6 +318,63 @@ def parse_host_vuln(workbook, data, filters):
                 )
 
     worksheet = workbook.add_worksheet("Host vs Vulnerability")
+    write_table(worksheet, table_headers, table_data)
+
+
+def parse_host_certificates(workbook, data):
+    table_data = []
+    table_headers = [
+        {"header": "Host IP"},
+        {"header": "Port"}
+    ]
+
+    for values in certificates.values():
+        table_headers.append({"header": values["prettyName"]})
+
+    for values in data["scanResult"]:
+        d = {
+            "Host IP": values["ip"],
+            "Port": int(values["port"])
+        }
+
+        for serverDefault in values["serverDefaults"]:
+            if serverDefault["id"] in [x for x in certificates.keys()]:
+                d[serverDefault["id"]] = {
+                    "prettyName": certificates[serverDefault["id"]]
+                    ["prettyName"],
+                    "severity": serverDefault["severity"]
+                }
+
+        table_data.append(insert([x["header"] for x in table_headers], d))
+
+    worksheet = workbook.add_worksheet("Host vs Certificates")
+    write_table(worksheet, table_headers, table_data)
+
+
+def parse_host_certificate(workbook, data):
+    table_data = []
+    table_headers = [
+        {"header": "Host IP"},
+        {"header": "Port"},
+        {"header": "Vulnerability"},
+        {"header": "Severity"},
+        {"header": "Information"}
+    ]
+
+    for values in data["scanResult"]:
+        for serverDefault in values["serverDefaults"]:
+            if serverDefault["id"] in [x for x in certificates.keys()]:
+                table_data.append(
+                    [
+                        values["ip"],
+                        int(values["port"]),
+                        certificates[serverDefault["id"]]["prettyName"],
+                        serverDefault["severity"],
+                        serverDefault["finding"]
+                    ]
+                )
+
+    worksheet = workbook.add_worksheet("Host vs Certificate")
     write_table(worksheet, table_headers, table_data)
 
 
@@ -310,8 +401,12 @@ def main():
         # variables summary
         logging.info("pretty JSON input file: {}".format(args.input_file.name))
         logging.info("XLSX output file: {}".format(output_file))
+        logging.info("certificate issue(s) to process: {}".format(
+            sorted(certificates.keys())
+        ))
+        logging.info("protocol(s) to process: {}".format(protocols))
         logging.info("vulnerability/ies to process: {}".format(
-            sorted(args.filters)
+            sorted(vulnerabilities.keys())
         ))
 
         data = json.load(args.input_file)
@@ -320,27 +415,39 @@ def main():
 
         logging.log(
             RESULT,
-            "generating 'Host vs Protocols' worksheet..."
+            "generating worksheet 'Host vs Certificates'..."
+        )
+        parse_host_certificates(workbook, data)
+
+        logging.log(
+            RESULT,
+            "generating worksheet 'Host vs Certificate'..."
+        )
+        parse_host_certificate(workbook, data)
+
+        logging.log(
+            RESULT,
+            "generating worksheet 'Host vs Protocols'..."
         )
         parse_host_protocols(workbook, data)
 
         logging.log(
             RESULT,
-            "generating 'Host vs Protocol' worksheet..."
+            "generating worksheet 'Host vs Protocol'..."
         )
         parse_host_protocol(workbook, data)
 
         logging.log(
             RESULT,
-            "generating 'Host vs Vulnerabilities' worksheet..."
+            "generating worksheet 'Host vs Vulnerabilities'..."
         )
-        parse_host_vulns(workbook, data, sorted(args.filters))
+        parse_host_vulnerabilities(workbook, data)
 
         logging.log(
             RESULT,
-            "generating 'Host vs Vulnerability' worksheet..."
+            "generating worksheet 'Host vs Vulnerability'..."
         )
-        parse_host_vuln(workbook, data, sorted(args.filters))
+        parse_host_vulnerability(workbook, data)
 
         workbook.close()
     except KeyboardInterrupt:
