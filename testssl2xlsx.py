@@ -27,16 +27,16 @@ RESULT = 21
 # reporting for the selected entries - respect the case -
 certificates = {
     "cert_chain_of_trust": {
-        "prettyName": "Chain of Trust"
+        "name": "Chain of Trust"
     },
     "cert_expiration_status": {
-        "prettyName": "Expiration Status"
+        "name": "Expiration Status"
     },
     "cert_signatureAlgorithm": {
-        "prettyName": "Signature Algorithm"
+        "name": "Signature Algorithm"
     },
     "cert_trust": {
-        "prettyName": "Trust"
+        "name": "Trust"
     }
 }
 protocols = sorted([
@@ -49,40 +49,40 @@ protocols = sorted([
 ])
 vulnerabilities = {
     "BEAST": {
-        "prettyName": "BEAST"
+        "name": "BEAST"
     },
     "BREACH": {
-        "prettyName": "BREACH"
+        "name": "BREACH"
     },
     "CRIME_TLS": {
-        "prettyName": "CRIME"
+        "name": "CRIME"
     },
     "fallback_SCSV": {
-        "prettyName": "Fallback SCSV"
+        "name": "Fallback SCSV"
     },
     "FREAK": {
-        "prettyName": "FREAK"
+        "name": "FREAK"
     },
     "LOGJAM": {
-        "prettyName": "Logjam"
+        "name": "Logjam"
     },
     "LUCKY13": {
-        "prettyName": "Lucky13"
+        "name": "Lucky13"
     },
     "POODLE_SSL": {
-        "prettyName": "POODLE"
+        "name": "POODLE"
     },
     "RC4": {
-        "prettyName": "RC4"
+        "name": "RC4"
     },
     "ROBOT": {
-        "prettyName": "ROBOT"
+        "name": "ROBOT"
     },
     "secure_client_renego": {
-        "prettyName": "Secure Client Renegotiation"
+        "name": "Secure Client Renegotiation"
     },
     "SWEET32": {
-        "prettyName": "Sweet32"
+        "name": "Sweet32"
     },
 }
 
@@ -136,13 +136,13 @@ def insert(headers, d):
 
     for key, values in d.items():
         if isinstance(values, dict):
-            if values["prettyName"] in headers:
+            if values["name"] in headers:
                 data.insert(
-                    headers.index(values["prettyName"]),
+                    headers.index(values["name"]),
                     values.get("severity")
                 )
             else:
-                data.insert(headers.index(values["prettyName"]), "N/A")
+                data.insert(headers.index(values["name"]), "N/A")
         else:
             if key in headers:
                 data.insert(headers.index(key), values)
@@ -242,7 +242,7 @@ def parse_host_vulnerabilities(workbook, data):
     ]
 
     for values in vulnerabilities.values():
-        table_headers.append({"header": values["prettyName"]})
+        table_headers.append({"header": values["name"]})
 
     for values in data["scanResult"]:
         d = {
@@ -253,8 +253,7 @@ def parse_host_vulnerabilities(workbook, data):
         for vulnerability in values["vulnerabilities"]:
             if vulnerability["id"] in [x for x in vulnerabilities.keys()]:
                 d[vulnerability["id"]] = {
-                    "prettyName": vulnerabilities[vulnerability["id"]]
-                    ["prettyName"],
+                    "name": vulnerabilities[vulnerability["id"]]["name"],
                     "severity": vulnerability["severity"]
                 }
 
@@ -306,7 +305,7 @@ def parse_host_vulnerability(workbook, data):
                     [
                         values["ip"],
                         int(values["port"]),
-                        vulnerabilities[vulnerability["id"]]["prettyName"],
+                        vulnerabilities[vulnerability["id"]]["name"],
                         vulnerability["severity"],
                         # avoid to raise KeyError exceptions for entries with
                         # no CVE defined
@@ -329,7 +328,7 @@ def parse_host_certificates(workbook, data):
     ]
 
     for values in certificates.values():
-        table_headers.append({"header": values["prettyName"]})
+        table_headers.append({"header": values["name"]})
 
     for values in data["scanResult"]:
         d = {
@@ -340,8 +339,7 @@ def parse_host_certificates(workbook, data):
         for serverDefault in values["serverDefaults"]:
             if serverDefault["id"] in [x for x in certificates.keys()]:
                 d[serverDefault["id"]] = {
-                    "prettyName": certificates[serverDefault["id"]]
-                    ["prettyName"],
+                    "name": certificates[serverDefault["id"]]["name"],
                     "severity": serverDefault["severity"]
                 }
 
@@ -368,7 +366,7 @@ def parse_host_certificate(workbook, data):
                     [
                         values["ip"],
                         int(values["port"]),
-                        certificates[serverDefault["id"]]["prettyName"],
+                        certificates[serverDefault["id"]]["name"],
                         serverDefault["severity"],
                         serverDefault["finding"]
                     ]
