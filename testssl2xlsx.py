@@ -83,7 +83,7 @@ vulnerabilities = {
     },
     "SWEET32": {
         "name": "Sweet32"
-    },
+    }
 }
 
 
