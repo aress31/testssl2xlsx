@@ -152,7 +152,7 @@ def insert(headers, d):
     return data
 
 
-def write_table(worksheet, table_headers, table_data):
+def draw_table(worksheet, table_headers, table_data):
     """ Create an Excel worksheet containing the 'table_headers'
         and 'table_data' dataset
     """
@@ -205,7 +205,7 @@ def parse_host_protocols(workbook, data):
         table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Protocols")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def parse_host_protocol(workbook, data):
@@ -231,7 +231,7 @@ def parse_host_protocol(workbook, data):
                     )
 
     worksheet = workbook.add_worksheet("Host vs Protocol")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def parse_host_vulnerabilities(workbook, data):
@@ -260,7 +260,7 @@ def parse_host_vulnerabilities(workbook, data):
         table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def parse_host_vulnerability(workbook, data):
@@ -317,7 +317,7 @@ def parse_host_vulnerability(workbook, data):
                 )
 
     worksheet = workbook.add_worksheet("Host vs Vulnerability")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def parse_host_certificates(workbook, data):
@@ -346,7 +346,7 @@ def parse_host_certificates(workbook, data):
         table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Certificates")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def parse_host_certificate(workbook, data):
@@ -373,7 +373,7 @@ def parse_host_certificate(workbook, data):
                 )
 
     worksheet = workbook.add_worksheet("Host vs Certificate")
-    write_table(worksheet, table_headers, table_data)
+    draw_table(worksheet, table_headers, table_data)
 
 
 def main():
