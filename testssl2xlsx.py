@@ -122,7 +122,7 @@ def parse_args():
         const=logging.DEBUG,
         default=logging.INFO,
         dest="loglevel",
-        help="enable output verbosity",
+        help="enable verbosity",
         required=False
     )
 
@@ -130,24 +130,15 @@ def parse_args():
 
 
 def insert(headers, d):
-    """ Insert the values at the correct column index
+    """ Insert values at the appropriate index
     """
-    data = []
+    data = ["N/A"] * len(headers)
 
     for key, values in d.items():
         if isinstance(values, dict):
-            if values["name"] in headers:
-                data.insert(
-                    headers.index(values["name"]),
-                    values.get("severity")
-                )
-            else:
-                data.insert(headers.index(values["name"]), "N/A")
+            data[headers.index(values["name"])] = values.get("severity")
         else:
-            if key in headers:
-                data.insert(headers.index(key), values)
-            else:
-                data.insert(headers.index(key), "N/A")
+            data[headers.index(key)] = values
 
     return data
 
@@ -179,6 +170,88 @@ def draw_table(worksheet, table_headers, table_data):
     )
 
 
+def parse_host_certificate(workbook, data):
+    table_data = []
+    table_headers = [
+        {"header": "Host IP"},
+        {"header": "Port"},
+        {"header": "Vulnerability"},
+        {"header": "Severity"},
+        {"header": "Information"}
+    ]
+
+    for values in data["scanResult"]:
+        for serverDefault in values["serverDefaults"]:
+            if serverDefault["id"] in certificates.keys():
+                table_data.append(
+                    [
+                        values["ip"],
+                        int(values["port"]),
+                        certificates[serverDefault["id"]]["name"],
+                        serverDefault["severity"],
+                        serverDefault["finding"]
+                    ]
+                )
+
+    worksheet = workbook.add_worksheet("Host vs Certificate")
+    draw_table(worksheet, table_headers, table_data)
+
+
+def parse_host_certificates(workbook, data):
+    table_data = []
+    table_headers = [
+        {"header": "Host IP"},
+        {"header": "Port"}
+    ]
+
+    for values in certificates.values():
+        table_headers.append({"header": values["name"]})
+
+    for values in data["scanResult"]:
+        d = {
+            "Host IP": values["ip"],
+            "Port": int(values["port"])
+        }
+
+        for serverDefault in values["serverDefaults"]:
+            if serverDefault["id"] in certificates.keys():
+                d[serverDefault["id"]] = {
+                    "name": certificates[serverDefault["id"]]["name"],
+                    "severity": serverDefault["severity"]
+                }
+
+        table_data.append(insert([x["header"] for x in table_headers], d))
+
+    worksheet = workbook.add_worksheet("Host vs Certificates")
+    draw_table(worksheet, table_headers, table_data)
+
+
+def parse_host_protocol(workbook, data):
+    table_data = []
+    table_headers = [
+        {"header": "Host IP"},
+        {"header": "Port"},
+        {"header": "Supported Protocol"},
+        {"header": "Severity"}
+    ]
+
+    for values in data["scanResult"]:
+        for protocol in values["protocols"]:
+            if protocol["id"] in protocols:
+                if protocol["finding"] == "offered":
+                    table_data.append(
+                        [
+                            values["ip"],
+                            int(values["port"]),
+                            protocol["id"],
+                            protocol["severity"]
+                        ]
+                    )
+
+    worksheet = workbook.add_worksheet("Host vs Protocol")
+    draw_table(worksheet, table_headers, table_data)
+
+
 def parse_host_protocols(workbook, data):
     table_data = []
     table_headers = [
@@ -196,7 +269,7 @@ def parse_host_protocols(workbook, data):
         }
 
         for protocol in values["protocols"]:
-            if protocol["id"] in [x for x in protocols]:
+            if protocol["id"] in protocols:
                 if protocol["finding"] == "offered":
                     d[protocol["id"]] = "YES"
                 else:
@@ -205,61 +278,6 @@ def parse_host_protocols(workbook, data):
         table_data.append(insert([x["header"] for x in table_headers], d))
 
     worksheet = workbook.add_worksheet("Host vs Protocols")
-    draw_table(worksheet, table_headers, table_data)
-
-
-def parse_host_protocol(workbook, data):
-    table_data = []
-    table_headers = [
-        {"header": "Host IP"},
-        {"header": "Port"},
-        {"header": "Supported Protocol"},
-        {"header": "Severity"}
-    ]
-
-    for values in data["scanResult"]:
-        for protocol in values["protocols"]:
-            if protocol["id"] in [x for x in protocols]:
-                if protocol["finding"] == "offered":
-                    table_data.append(
-                        [
-                            values["ip"],
-                            int(values["port"]),
-                            protocol["id"],
-                            protocol["severity"]
-                        ]
-                    )
-
-    worksheet = workbook.add_worksheet("Host vs Protocol")
-    draw_table(worksheet, table_headers, table_data)
-
-
-def parse_host_vulnerabilities(workbook, data):
-    table_data = []
-    table_headers = [
-        {"header": "Host IP"},
-        {"header": "Port"}
-    ]
-
-    for values in vulnerabilities.values():
-        table_headers.append({"header": values["name"]})
-
-    for values in data["scanResult"]:
-        d = {
-            "Host IP": values["ip"],
-            "Port": int(values["port"])
-        }
-
-        for vulnerability in values["vulnerabilities"]:
-            if vulnerability["id"] in [x for x in vulnerabilities.keys()]:
-                d[vulnerability["id"]] = {
-                    "name": vulnerabilities[vulnerability["id"]]["name"],
-                    "severity": vulnerability["severity"]
-                }
-
-        table_data.append(insert([x["header"] for x in table_headers], d))
-
-    worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
     draw_table(worksheet, table_headers, table_data)
 
 
@@ -300,7 +318,7 @@ def parse_host_vulnerability(workbook, data):
 
     for values in data["scanResult"]:
         for vulnerability in values["vulnerabilities"]:
-            if vulnerability["id"] in [x for x in vulnerabilities.keys()]:
+            if vulnerability["id"] in vulnerabilities.keys():
                 table_data.append(
                     [
                         values["ip"],
@@ -309,7 +327,7 @@ def parse_host_vulnerability(workbook, data):
                         vulnerability["severity"],
                         # avoid to raise KeyError exceptions for entries with
                         # no CVE defined
-                        # replace comma and space with return line to prevent
+                        # replace space with Windows' return line to prevent
                         # super wide cells
                         vulnerability.get("cve", "N/A").replace(" ", "\r\n"),
                         vulnerability["finding"]
@@ -320,14 +338,14 @@ def parse_host_vulnerability(workbook, data):
     draw_table(worksheet, table_headers, table_data)
 
 
-def parse_host_certificates(workbook, data):
+def parse_host_vulnerabilities(workbook, data):
     table_data = []
     table_headers = [
         {"header": "Host IP"},
         {"header": "Port"}
     ]
 
-    for values in certificates.values():
+    for values in vulnerabilities.values():
         table_headers.append({"header": values["name"]})
 
     for values in data["scanResult"]:
@@ -336,43 +354,16 @@ def parse_host_certificates(workbook, data):
             "Port": int(values["port"])
         }
 
-        for serverDefault in values["serverDefaults"]:
-            if serverDefault["id"] in [x for x in certificates.keys()]:
-                d[serverDefault["id"]] = {
-                    "name": certificates[serverDefault["id"]]["name"],
-                    "severity": serverDefault["severity"]
+        for vulnerability in values["vulnerabilities"]:
+            if vulnerability["id"] in vulnerabilities.keys():
+                d[vulnerability["id"]] = {
+                    "name": vulnerabilities[vulnerability["id"]]["name"],
+                    "severity": vulnerability["severity"]
                 }
 
         table_data.append(insert([x["header"] for x in table_headers], d))
 
-    worksheet = workbook.add_worksheet("Host vs Certificates")
-    draw_table(worksheet, table_headers, table_data)
-
-
-def parse_host_certificate(workbook, data):
-    table_data = []
-    table_headers = [
-        {"header": "Host IP"},
-        {"header": "Port"},
-        {"header": "Vulnerability"},
-        {"header": "Severity"},
-        {"header": "Information"}
-    ]
-
-    for values in data["scanResult"]:
-        for serverDefault in values["serverDefaults"]:
-            if serverDefault["id"] in [x for x in certificates.keys()]:
-                table_data.append(
-                    [
-                        values["ip"],
-                        int(values["port"]),
-                        certificates[serverDefault["id"]]["name"],
-                        serverDefault["severity"],
-                        serverDefault["finding"]
-                    ]
-                )
-
-    worksheet = workbook.add_worksheet("Host vs Certificate")
+    worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
     draw_table(worksheet, table_headers, table_data)
 
 
@@ -413,21 +404,15 @@ def main():
 
         logging.log(
             RESULT,
-            "generating worksheet 'Host vs Certificates'..."
-        )
-        parse_host_certificates(workbook, data)
-
-        logging.log(
-            RESULT,
             "generating worksheet 'Host vs Certificate'..."
         )
         parse_host_certificate(workbook, data)
 
         logging.log(
             RESULT,
-            "generating worksheet 'Host vs Protocols'..."
+            "generating worksheet 'Host vs Certificates'..."
         )
-        parse_host_protocols(workbook, data)
+        parse_host_certificates(workbook, data)
 
         logging.log(
             RESULT,
@@ -437,15 +422,21 @@ def main():
 
         logging.log(
             RESULT,
-            "generating worksheet 'Host vs Vulnerabilities'..."
+            "generating worksheet 'Host vs Protocols'..."
         )
-        parse_host_vulnerabilities(workbook, data)
+        parse_host_protocols(workbook, data)
 
         logging.log(
             RESULT,
             "generating worksheet 'Host vs Vulnerability'..."
         )
         parse_host_vulnerability(workbook, data)
+
+        logging.log(
+            RESULT,
+            "generating worksheet 'Host vs Vulnerabilities'..."
+        )
+        parse_host_vulnerabilities(workbook, data)
 
         workbook.close()
     except KeyboardInterrupt:
