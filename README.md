@@ -37,11 +37,11 @@ optional arguments:
 ```
 
 ## Example
-1. Generate the testssl prettyJSON file using a command similar to:
+1. Generate the `testssl prettyJSON` file using a command similar to:
 
 `$ bash $HOME/testssl.sh/testssl.sh --jsonfile-pretty testssl-results.json --quiet --nodns --parallel --server-defaults --protocols --vulnerable --file ../nmap/full_SYN.gnmap`
 
-2. Use testssl2xlsx with the prettyJSON file generated in the previous step:
+2. Use `testssl2xlsx` with the `prettyJSON` file generated in the previous step:
 
 `$ python testssl2xlsx.py -iJ testssl-results.json`
 
