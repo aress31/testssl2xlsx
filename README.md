@@ -6,10 +6,12 @@
 This script parses `testssl pretty JSON` scans results into `Excel` tables (`.xlsx`) to facilitate the reporting process of penetration tests, especially useful when dealing with big scopes. Having scans results organised in `Excel` tables also allow customers and testers to use `Excel` strong filtering capabilities. 
 
 The following worksheets are generated:
-* `Host vs Protocols`
+* `Host vs Certificate`
+* `Host vs Certificates`
 * `Host vs Protocol`
-* `Host vs Vulnerabilities`
+* `Host vs Protocols`
 * `Host vs Vulnerability`
+* `Host vs Vulnerabilities`
 
 ## Installation
 ```
@@ -33,6 +35,12 @@ optional arguments:
                         XLSX file containing the output results
   -v, --verbose         enable output verbosity
 ```
+
+## Example
+1. Generate the testssl prettyJSON file using a command similar to:
+`$ bash $HOME/testssl.sh/testssl.sh --jsonfile-pretty testssl-results.json --quiet --nodns --parallel --server-defaults --protocols --vulnerable --file ../nmap/full_SYN.gnmap`
+2. Use testssl2xlsx with the prettyJSON file generated in the previous step:
+`$ python testssl2xlsx.py -iJ testssl-results.json`
 
 ## Possible Improvements
 - [ ] Adding new features, such as --protocols filtering.
