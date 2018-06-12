@@ -194,7 +194,7 @@ def parse_host_certificate(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Certificate")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def parse_host_certificates(workbook, data):
@@ -226,7 +226,7 @@ def parse_host_certificates(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Certificates")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def parse_host_protocol(workbook, data):
@@ -255,7 +255,7 @@ def parse_host_protocol(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Protocol")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def parse_host_protocols(workbook, data):
@@ -287,7 +287,7 @@ def parse_host_protocols(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Protocols")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def parse_host_vulnerability(workbook, data):
@@ -347,7 +347,7 @@ def parse_host_vulnerability(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Vulnerability")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def parse_host_vulnerabilities(workbook, data):
@@ -379,7 +379,7 @@ def parse_host_vulnerabilities(workbook, data):
         worksheet = workbook.add_worksheet("Host vs Vulnerabilities")
         draw_table(worksheet, table_headers, table_data)
     except KeyError as e:
-        logging.warning("KeyError - {}".format(e))
+        logging.exception("KeyError - {}".format(e))
 
 
 def main():
