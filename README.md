@@ -1,11 +1,18 @@
-![testssl2xlsx](images/testssl2xlsx.png)
-# testssl2xlsx
-[![Language](https://img.shields.io/badge/Lang-Python-blue.svg)](https://www.python.org)
-[![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://opensource.org/licenses/Apache-2.0)
+<p align="center">
+  <img alt="logo" src="images/testssl2xlsx.png" height="200">
+  <p align="center">
+      <a href="https://www.python.org"><img alt="lang" src="https://img.shields.io/badge/Lang-Python-blue.svg"></a>
+      <a href="https://opensource.org/licenses/Apache-2.0"><img alt="license" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"></a>
+      <img alt="version" src="https://img.shields.io/badge/Version-2.3-green.svg">
+      <img alt="bitcoin" src="https://img.shields.io/badge/Bitcoin-15aFaQaW9cxa4tRocax349JJ7RKyj7YV1p-yellow.svg">
+      <img alt="bitcoin cash" src="https://img.shields.io/badge/Bitcoin%20Cash-qqez5ed5wjpwq9znyuhd2hdg86nquqpjcgkm3t8mg3-yellow.svg">
+      <img alt="ether" src="https://img.shields.io/badge/Ether-0x70bC178EC44500C17B554E62BC31EA2B6251f64B-yellow.svg">
+  </p>
+</p>
 
-This script parses `testssl pretty JSON` scans results into `Excel` tables (`.xlsx`) to facilitate the reporting process of penetration tests, especially useful when dealing with big scopes. Having scans results organised in `Excel` tables also allow customers and testers to use `Excel` strong filtering capabilities. 
+Parse `testssl` scans results (in a `JSON` format) into `Excel` tables to facilitate the reporting process of penetration tests, especially useful when dealing with large scopes. Having scans results organised in `Excel` tables also allow customers and testers to use `Excel` powerful filtering capabilities.
 
-The following worksheets are generated:
+The following Excel worksheets are generated:
 * `Host vs Certificate`
 * `Host vs Certificates`
 * `Host vs Protocol`
@@ -21,27 +28,25 @@ $ git clone https://github.com/AresS31/testssl2xlsx
 
 ## Usage
 ```
-$ python testssl2xlsx.py [-h]
-                   [-f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]]
-                   -iJ INPUT_FILE [-oX OUTPUT_FILE] [-v]
+testssl2xlsx.py [-h] -iJ INPUT_FILES [INPUT_FILES ...]
+                [-oX OUTPUT_FILE] [-v]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -f {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...], --filters {beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} [{beast,breach,crime,freak,logjam,lucky13,poodle_ssl,rc4,sweet32} ...]
-                        vulnerability/ies to process
-  -iJ INPUT_FILE, --input-json INPUT_FILE
-                        pretty JSON file containing the testssl results
+  -iJ INPUT_FILES [INPUT_FILES ...], --input-json INPUT_FILES [INPUT_FILES ...]
+                        input from testssl file(s) in JSON format
   -oX OUTPUT_FILE, --output-xlsx OUTPUT_FILE
-                        XLSX file containing the output results
-  -v, --verbose         enable output verbosity
+                        output results to a specified <output_file> in XLSX
+                        format
+  -v, --verbose         increase verbosity level
 ```
 
 ## Example
-1. Generate the `testssl prettyJSON` file using a command similar to:
+1. Generate the `testssl` input file with:
 
-`$ bash $HOME/testssl.sh/testssl.sh --jsonfile-pretty testssl-results.json --quiet --nodns --parallel --server-defaults --protocols --vulnerable --file ../nmap/full_SYN.gnmap`
+`$ testssl --jsonfile-pretty testssl-results.json --quiet --nodns none --parallel --server-defaults --protocols --vulnerable --file ../nmap/SYN-*.gnmap`
 
-2. Use `testssl2xlsx` with the `prettyJSON` file generated in the previous step:
+2. Run `testssl2xlsx` with the testssl `JSON` file generated in the previous step:
 
 `$ python testssl2xlsx.py -iJ testssl-results.json`
 
@@ -49,9 +54,14 @@ optional arguments:
 - [ ] Adding new features, such as --protocols filtering.
 - [ ] Source code optimisation.
 
+## Donations
+* Via Bitcoin      : **15aFaQaW9cxa4tRocax349JJ7RKyj7YV1p**
+* Via Bitcoin Cash : **qqez5ed5wjpwq9znyuhd2hdg86nquqpjcgkm3t8mg3**
+* Via Ether        : **0x70bC178EC44500C17B554E62BC31EA2B6251f64B**
+
 ## Licenses
 ### testssl2xlsx
-Copyright 2017 - 2018 Alexandre Teyar
+Copyright 2017 - 2019 Alexandre Teyar
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
