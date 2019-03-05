@@ -12,12 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 #    limitations under the License.
-#
-# TODO:
-# * implement support for regex input (e.g. *.json)
-# * implement support to specify a directory rather than individual files
-# * reconfigure logging to use a logging.json configuration file
-# * enforce file extensions (input must be .json, output must be .xlsx)
 
 import argparse
 import json
@@ -120,7 +114,7 @@ def parse_args():
         default="testssl-results_{}.xlsx".format(
             time.strftime("%Y%m%d-%H%M%S")),
         dest="output_file",
-        help="output results to a specified <output_file> in XLSX format",
+        help="output results to a specified <OUTPUT_FILE> in XLSX format",
         required=False,
         type=str
     )

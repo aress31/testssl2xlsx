@@ -3,7 +3,6 @@
   <p align="center">
       <a href="https://www.python.org"><img alt="lang" src="https://img.shields.io/badge/Lang-Python-blue.svg"></a>
       <a href="https://opensource.org/licenses/Apache-2.0"><img alt="license" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"></a>
-      <img alt="version" src="https://img.shields.io/badge/Version-2.3-green.svg">
       <img alt="bitcoin" src="https://img.shields.io/badge/Bitcoin-15aFaQaW9cxa4tRocax349JJ7RKyj7YV1p-yellow.svg">
       <img alt="bitcoin cash" src="https://img.shields.io/badge/Bitcoin%20Cash-qqez5ed5wjpwq9znyuhd2hdg86nquqpjcgkm3t8mg3-yellow.svg">
       <img alt="ether" src="https://img.shields.io/badge/Ether-0x70bC178EC44500C17B554E62BC31EA2B6251f64B-yellow.svg">
@@ -36,7 +35,7 @@ optional arguments:
   -iJ INPUT_FILES [INPUT_FILES ...], --input-json INPUT_FILES [INPUT_FILES ...]
                         input from testssl file(s) in JSON format
   -oX OUTPUT_FILE, --output-xlsx OUTPUT_FILE
-                        output results to a specified <output_file> in XLSX
+                        output results to a specified <OUTPUT_FILE> in XLSX
                         format
   -v, --verbose         increase verbosity level
 ```
@@ -52,6 +51,9 @@ optional arguments:
 
 ## Possible Improvements
 - [ ] Adding new features, such as --protocols filtering.
+- [ ] Enforce the correct file extensions (input file(s) must be .json, output file must be .xlsx)
+- [ ] Reconfigure the logging module to load its settings with a configuration file
+- [ ] Implement support for directory input rather than individual files.
 - [ ] Source code optimisation.
 
 ## Donations
@@ -59,7 +61,7 @@ optional arguments:
 * Via Bitcoin Cash : **qqez5ed5wjpwq9znyuhd2hdg86nquqpjcgkm3t8mg3**
 * Via Ether        : **0x70bC178EC44500C17B554E62BC31EA2B6251f64B**
 
-## Licenses
+## License(s)
 ### testssl2xlsx
 Copyright 2017 - 2019 Alexandre Teyar
 
