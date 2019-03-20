@@ -10,6 +10,8 @@
   </p>
 </p>
 
+# This project has now been deprecated. Its functionality has been incorporated into [pentest2xlsx](https://github.com/AresS31/pentest2xlsx).
+
 Parse `testssl` scans results (in a `JSON` format) into `Excel` tables to facilitate the reporting process of penetration tests, especially useful when dealing with large scopes. Having scans results organised in `Excel` tables also allow customers and testers to use `Excel` powerful filtering capabilities.
 
 The following Excel worksheets are generated:
